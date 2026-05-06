@@ -11,6 +11,10 @@
     "storage"
   ],
   "action": {
+    "default_icon": {
+      "16": "icons/icon.svg",
+      "32": "icons/icon.svg"
+    },
     "default_title": "AntiShorts settings",
     "default_popup": "popup.html"
   },
