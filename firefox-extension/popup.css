@@ -1,0 +1,102 @@
+:root {
+  color-scheme: dark;
+  --bg: #11151c;
+  --panel: #1b212c;
+  --border: #323b4c;
+  --text: #eef3fa;
+  --muted: #acb6c8;
+  --accent: #ff694f;
+  --accent-strong: #ff275c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 360px;
+  background:
+    radial-gradient(circle at top left, rgba(255, 105, 79, 0.18), transparent 34%),
+    linear-gradient(180deg, #0d1016 0%, var(--bg) 100%);
+  color: var(--text);
+  font: 13px/1.45 "Segoe UI", "Helvetica Neue", sans-serif;
+}
+
+.popup-shell {
+  padding: 16px;
+}
+
+.popup-header {
+  margin-bottom: 14px;
+}
+
+.popup-header h1 {
+  margin: 0 0 6px;
+  font-size: 22px;
+}
+
+.popup-header p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.settings-list {
+  display: grid;
+  gap: 10px;
+}
+
+.setting-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(27, 33, 44, 0.84);
+}
+
+.setting-card input {
+  inline-size: 18px;
+  block-size: 18px;
+  margin-top: 2px;
+  accent-color: var(--accent);
+}
+
+.setting-card h2 {
+  margin: 0 0 4px;
+  font-size: 14px;
+}
+
+.setting-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.popup-footer {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+button {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 14px;
+  color: white;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  cursor: pointer;
+  font: inherit;
+}
+
+button.secondary {
+  color: var(--text);
+  background: #242c39;
+  border: 1px solid var(--border);
+}
+
+.status {
+  min-height: 1.2em;
+  color: #ffc2b8;
+}

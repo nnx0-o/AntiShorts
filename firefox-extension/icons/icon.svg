@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <defs>
+    <clipPath id="tile-clip">
+      <rect width="96" height="96" rx="24"/>
+    </clipPath>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#15181d"/>
+      <stop offset="100%" stop-color="#2b3240"/>
+    </linearGradient>
+    <linearGradient id="shorts" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff0000"/>
+      <stop offset="50%" stop-color="#ff0000"/>
+      <stop offset="100%" stop-color="#ff0000"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.28" cy="0.18" r="0.9">
+      <stop offset="0%" stop-color="#ff2200" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#ff2200" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <g clip-path="url(#tile-clip)">
+    <rect width="96" height="96" rx="24" fill="url(#bg)"/>
+    <circle cx="28" cy="24" r="34" fill="url(#glow)"/>
+    <g transform="rotate(-29 48 48)" filter="url(#shadow)">
+      <rect x="21" y="47" width="43" height="20" rx="10" fill="url(#shorts)"/>
+      <rect x="31" y="29" width="43" height="20" rx="10" fill="url(#shorts)"/>
+    </g>
+    <path d="M41 39 56.6 48 41 57Z" fill="#ffffff"/>
+    <circle cx="48" cy="48" r="36.5" fill="none" stroke="#a3a3a3" stroke-width="5"/>
+    <path d="M24.5 75 71.5 21.5" fill="none" stroke="#a3a3a3" stroke-linecap="round" stroke-width="5"/>
+  </g>
+</svg>

@@ -1,0 +1,21 @@
+.antishorts-hidden {
+  display: none !important;
+}
+
+html.antishorts-shorts-locked,
+html.antishorts-shorts-locked body,
+html.antishorts-shorts-locked ytd-shorts,
+html.antishorts-shorts-locked ytd-reel-video-renderer,
+html.antishorts-shorts-locked #shorts-container {
+  overscroll-behavior-y: none !important;
+  scroll-behavior: auto !important;
+}
+
+html.antishorts-hide-shorts-nav-buttons #navigation-button-up,
+html.antishorts-hide-shorts-nav-buttons #navigation-button-down,
+html.antishorts-hide-shorts-nav-buttons button[aria-label="Previous video"],
+html.antishorts-hide-shorts-nav-buttons button[aria-label="Next video"] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}

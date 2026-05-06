@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AntiShorts Icon Generator</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0f1218;
+      --panel: #171b24;
+      --panel-alt: #1f2530;
+      --border: #31394a;
+      --text: #eef2f8;
+      --muted: #aab4c4;
+      --accent: #ff6d59;
+      --accent-strong: #ff2c5c;
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 109, 89, 0.18), transparent 30%),
+        linear-gradient(180deg, #0c1016 0%, var(--bg) 100%);
+      color: var(--text);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(360px, 460px) minmax(420px, 1fr);
+      gap: 24px;
+      padding: 28px;
+    }
+
+    .panel {
+      background: rgba(23, 27, 36, 0.9);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(20px);
+    }
+
+    .controls {
+      padding: 24px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 28px;
+      line-height: 1.1;
+    }
+
+    .lede {
+      margin: 0 0 20px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .control-groups {
+      display: grid;
+      gap: 18px;
+      max-height: calc(100vh - 210px);
+      overflow: auto;
+      padding-right: 6px;
+    }
+
+    .group {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(31, 37, 48, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .group h2 {
+      margin: 0 0 12px;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ffb7a8;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    input,
+    textarea,
+    button {
+      font: inherit;
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #11151d;
+      color: var(--text);
+    }
+
+    input[type="color"] {
+      width: 100%;
+      height: 42px;
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #11151d;
+    }
+
+    .preview {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 18px;
+      padding: 24px;
+    }
+
+    .preview-top {
+      display: grid;
+      gap: 16px;
+    }
+
+    .preview-frame {
+      display: grid;
+      place-items: center;
+      min-height: 300px;
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0)),
+        radial-gradient(circle at center, rgba(255, 109, 89, 0.12), transparent 55%),
+        #0d1117;
+    }
+
+    .preview-frame svg {
+      width: min(320px, 72vw);
+      height: auto;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    button {
+      padding: 11px 16px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      cursor: pointer;
+    }
+
+    button.secondary {
+      background: #232a36;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .status {
+      min-height: 1.3em;
+      color: #ffc2b8;
+      font-size: 13px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 320px;
+      padding: 16px;
+      resize: vertical;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: #0c1016;
+      color: #dbe6f5;
+      font-family: "Cascadia Code", Consolas, monospace;
+      line-height: 1.45;
+    }
+
+    .hint {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 980px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .control-groups {
+        max-height: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="layout">
+    <section class="panel controls">
+      <h1>AntiShorts Icon Generator</h1>
+      <p class="lede">Edit the geometry and colors, preview the result instantly, then copy or download the generated SVG. The goal is to make it easy to tune the two capsule shapes without digging through extension files.</p>
+      <div class="control-groups" id="control-groups"></div>
+    </section>
+
+    <section class="panel preview">
+      <div class="preview-top">
+        <div class="preview-frame" id="preview-frame"></div>
+        <div class="actions">
+          <button id="copy-svg" type="button">Copy SVG</button>
+          <button id="download-svg" type="button">Download SVG</button>
+          <button class="secondary" id="reset-values" type="button">Reset Defaults</button>
+        </div>
+        <div class="status" id="status"></div>
+        <p class="hint">When you are happy with the result, replace <strong>firefox-extension/icons/icon.svg</strong> with the downloaded file and rebuild the add-on packages if needed.</p>
+      </div>
+      <textarea id="svg-output" spellcheck="false"></textarea>
+    </section>
+  </main>
+
+  <script>
+    const STORAGE_KEY = "antishorts-icon-generator-state-v2";
+
+    const FIELD_GROUPS = [
+      {
+        title: "Background",
+        fields: [
+          { key: "bgStart", label: "Background start", type: "color" },
+          { key: "bgEnd", label: "Background end", type: "color" },
+          { key: "tileRadius", label: "Tile radius", type: "number", min: 0, max: 48, step: 1 },
+          { key: "glowX", label: "Glow X", type: "number", min: -20, max: 120, step: 0.5 },
+          { key: "glowY", label: "Glow Y", type: "number", min: -20, max: 120, step: 0.5 },
+          { key: "glowRadius", label: "Glow radius", type: "number", min: 0, max: 80, step: 0.5 },
+          { key: "glowColor", label: "Glow color", type: "color" },
+          { key: "glowOpacity", label: "Glow opacity", type: "number", min: 0, max: 1, step: 0.01 }
+        ]
+      },
+      {
+        title: "Capsules",
+        fields: [
+          { key: "rotation", label: "Rotation", type: "number", min: -90, max: 90, step: 1 },
+          { key: "pill1X", label: "Pill 1 X", type: "number", min: 0, max: 96, step: 0.5 },
+          { key: "pill1Y", label: "Pill 1 Y", type: "number", min: 0, max: 96, step: 0.5 },
+          { key: "pill2X", label: "Pill 2 X", type: "number", min: 0, max: 96, step: 0.5 },
+          { key: "pill2Y", label: "Pill 2 Y", type: "number", min: 0, max: 96, step: 0.5 },
+          { key: "pillWidth", label: "Pill width", type: "number", min: 0, max: 60, step: 0.5 },
+          { key: "pillHeight", label: "Pill height", type: "number", min: 0, max: 30, step: 0.5 },
+          { key: "pillRadius", label: "Pill radius", type: "number", min: 0, max: 20, step: 0.5 },
+          { key: "shortsStart", label: "Gradient start", type: "color" },
+          { key: "shortsMid", label: "Gradient mid", type: "color" },
+          { key: "shortsEnd", label: "Gradient end", type: "color" },
+          { key: "shadowBlur", label: "Shadow blur", type: "number", min: 0, max: 20, step: 0.5 },
+          { key: "shadowDy", label: "Shadow Y", type: "number", min: -10, max: 20, step: 0.5 },
+          { key: "shadowOpacity", label: "Shadow opacity", type: "number", min: 0, max: 1, step: 0.01 }
+        ]
+      },
+      {
+        title: "Play Triangle",
+        fields: [
+          { key: "playColor", label: "Play color", type: "color" },
+          { key: "playLeftX", label: "Play left X", type: "number", min: 0, max: 96, step: 0.5 },
+          { key: "playTopY", label: "Play top Y", type: "number", min: 0, max: 96, step: 0.5 },
+          { key: "playTipX", label: "Play tip X", type: "number", min: 0, max: 96, step: 0.5 },
+          { key: "playTipY", label: "Play tip Y", type: "number", min: 0, max: 96, step: 0.5 },
+          { key: "playBottomY", label: "Play bottom Y", type: "number", min: 0, max: 96, step: 0.5 }
+        ]
+      },
+      {
+        title: "No Symbol",
+        fields: [
+          { key: "ringRadius", label: "Ring radius", type: "number", min: 0, max: 48, step: 0.5 },
+          { key: "ringStroke", label: "Ring stroke", type: "number", min: 0, max: 20, step: 0.5 },
+          { key: "ringColor", label: "Ring color", type: "color" },
+          { key: "slashX1", label: "Slash X1", type: "number", min: 0, max: 96, step: 0.5 },
+          { key: "slashY1", label: "Slash Y1", type: "number", min: 0, max: 96, step: 0.5 },
+          { key: "slashX2", label: "Slash X2", type: "number", min: 0, max: 96, step: 0.5 },
+          { key: "slashY2", label: "Slash Y2", type: "number", min: 0, max: 96, step: 0.5 },
+          { key: "slashStroke", label: "Slash stroke", type: "number", min: 0, max: 20, step: 0.5 }
+        ]
+      }
+    ];
+
+    const DEFAULTS = {
+      bgStart: "#15181d",
+      bgEnd: "#2b3240",
+      tileRadius: 24,
+      glowX: 28,
+      glowY: 24,
+      glowRadius: 34,
+      glowColor: "#ff2200",
+      glowOpacity: 0,
+      rotation: -30,
+      pill1X: 22,
+      pill1Y: 47,
+      pill2X: 32,
+      pill2Y: 29,
+      pillWidth: 41.5,
+      pillHeight: 20,
+      pillRadius: 10,
+      shortsStart: "#ff0000",
+      shortsMid: "#ff0000",
+      shortsEnd: "#ff0000",
+      shadowBlur: 4,
+      shadowDy: 4,
+      shadowOpacity: 0.35,
+      playColor: "#ffffff",
+      playLeftX: 41,
+      playTopY: 39,
+      playTipX: 56.6,
+      playTipY: 48,
+      playBottomY: 57,
+      ringRadius: 36.5,
+      ringStroke: 5,
+      ringColor: "#a3a3a3",
+      slashX1: 24.5,
+      slashY1: 75,
+      slashX2: 71.5,
+      slashY2: 21.5,
+      slashStroke: 5
+    };
+
+    const state = loadState();
+    const groupsRoot = document.getElementById("control-groups");
+    const previewFrame = document.getElementById("preview-frame");
+    const output = document.getElementById("svg-output");
+    const status = document.getElementById("status");
+
+    buildControls();
+    render();
+
+    document.getElementById("copy-svg").addEventListener("click", async () => {
+      const svg = buildSvg(state);
+
+      try {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(svg);
+          setStatus("SVG copied to clipboard.");
+          return;
+        }
+      } catch {
+      }
+
+      output.focus();
+      output.select();
+      const copied = document.execCommand("copy");
+      setStatus(copied ? "SVG copied to clipboard." : "Copy failed. Use the textarea manually.");
+    });
+
+    document.getElementById("download-svg").addEventListener("click", () => {
+      const blob = new Blob([buildSvg(state)], { type: "image/svg+xml;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "icon.svg";
+      link.click();
+      URL.revokeObjectURL(url);
+      setStatus("Downloaded icon.svg.");
+    });
+
+    document.getElementById("reset-values").addEventListener("click", () => {
+      Object.assign(state, structuredClone(DEFAULTS));
+      syncInputs();
+      render();
+      setStatus("Reset to the current default icon values.");
+    });
+
+    function buildControls() {
+      for (const group of FIELD_GROUPS) {
+        const section = document.createElement("section");
+        section.className = "group";
+
+        const heading = document.createElement("h2");
+        heading.textContent = group.title;
+        section.appendChild(heading);
+
+        const grid = document.createElement("div");
+        grid.className = "field-grid";
+
+        for (const field of group.fields) {
+          const label = document.createElement("label");
+          label.htmlFor = field.key;
+          label.textContent = field.label;
+
+          const input = document.createElement("input");
+          input.id = field.key;
+          input.name = field.key;
+          input.type = field.type;
+
+          if (field.type === "number") {
+            input.min = field.min;
+            input.max = field.max;
+            input.step = field.step;
+          }
+
+          input.value = state[field.key];
+          input.addEventListener("input", () => {
+            state[field.key] = field.type === "number" ? Number(input.value) : input.value;
+            render();
+          });
+
+          label.appendChild(input);
+          grid.appendChild(label);
+        }
+
+        section.appendChild(grid);
+        groupsRoot.appendChild(section);
+      }
+    }
+
+    function syncInputs() {
+      for (const input of groupsRoot.querySelectorAll("input")) {
+        input.value = state[input.name];
+      }
+    }
+
+    function render() {
+      const svg = buildSvg(state);
+      previewFrame.innerHTML = svg;
+      output.value = svg;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function setStatus(message) {
+      status.textContent = message;
+      window.clearTimeout(setStatus.timeoutId);
+      setStatus.timeoutId = window.setTimeout(() => {
+        status.textContent = "";
+      }, 2200);
+    }
+
+    function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+        if (saved && typeof saved === "object") {
+          return { ...structuredClone(DEFAULTS), ...saved };
+        }
+      } catch {
+      }
+
+      return structuredClone(DEFAULTS);
+    }
+
+    function buildSvg(values) {
+      return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <defs>
+    <clipPath id="tile-clip">
+      <rect width="96" height="96" rx="${values.tileRadius}"/>
+    </clipPath>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="${values.bgStart}"/>
+      <stop offset="100%" stop-color="${values.bgEnd}"/>
+    </linearGradient>
+    <linearGradient id="shorts" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="${values.shortsStart}"/>
+      <stop offset="50%" stop-color="${values.shortsMid}"/>
+      <stop offset="100%" stop-color="${values.shortsEnd}"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.28" cy="0.18" r="0.9">
+      <stop offset="0%" stop-color="${values.glowColor}" stop-opacity="${values.glowOpacity}"/>
+      <stop offset="100%" stop-color="${values.glowColor}" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="${values.shadowDy}" stdDeviation="${values.shadowBlur}" flood-color="#000000" flood-opacity="${values.shadowOpacity}"/>
+    </filter>
+  </defs>
+  <g clip-path="url(#tile-clip)">
+    <rect width="96" height="96" rx="${values.tileRadius}" fill="url(#bg)"/>
+    <circle cx="${values.glowX}" cy="${values.glowY}" r="${values.glowRadius}" fill="url(#glow)"/>
+    <g transform="rotate(${values.rotation} 48 48)" filter="url(#shadow)">
+      <rect x="${values.pill1X}" y="${values.pill1Y}" width="${values.pillWidth}" height="${values.pillHeight}" rx="${values.pillRadius}" fill="url(#shorts)"/>
+      <rect x="${values.pill2X}" y="${values.pill2Y}" width="${values.pillWidth}" height="${values.pillHeight}" rx="${values.pillRadius}" fill="url(#shorts)"/>
+    </g>
+    <path d="M${values.playLeftX} ${values.playTopY} ${values.playTipX} ${values.playTipY} ${values.playLeftX} ${values.playBottomY}Z" fill="${values.playColor}"/>
+    <circle cx="48" cy="48" r="${values.ringRadius}" fill="none" stroke="${values.ringColor}" stroke-width="${values.ringStroke}"/>
+    <path d="M${values.slashX1} ${values.slashY1} ${values.slashX2} ${values.slashY2}" fill="none" stroke="${values.ringColor}" stroke-linecap="round" stroke-width="${values.slashStroke}"/>
+  </g>
+</svg>`;
+    }
+  </script>
+</body>
+</html>

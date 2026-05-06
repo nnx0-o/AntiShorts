@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AntiShorts Settings</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main class="popup-shell">
+    <header class="popup-header">
+      <div>
+        <h1>AntiShorts</h1>
+        <p>Choose which YouTube Shorts behaviors stay blocked.</p>
+      </div>
+    </header>
+
+    <form id="settings-form" class="settings-list"></form>
+
+    <footer class="popup-footer">
+      <button id="reset-defaults" class="secondary" type="button">Reset defaults</button>
+      <div id="status" class="status" aria-live="polite"></div>
+    </footer>
+  </main>
+
+  <script src="settings.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
