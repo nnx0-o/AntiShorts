@@ -134,8 +134,18 @@
 
     clearHiddenReason("preview");
 
-    for (const element of document.querySelectorAll(".reel-video-in-sequence-new, .reel-video-in-sequence-thumbnail")) {
-      setElementHidden(element, "preview", true);
+    const sequenceNodes = Array.from(document.querySelectorAll(".reel-video-in-sequence-new"));
+
+    for (const node of sequenceNodes) {
+      const isCurrentSequenceNode = Boolean(
+        node.querySelector("ytd-reel-video-renderer, ytd-player, video") || normalizeText(node.textContent).length > 0
+      );
+
+      setElementHidden(node, "preview", !isCurrentSequenceNode);
+
+      for (const thumbnail of node.querySelectorAll(".reel-video-in-sequence-thumbnail")) {
+        setElementHidden(thumbnail, "preview", !isCurrentSequenceNode);
+      }
     }
   }
 
